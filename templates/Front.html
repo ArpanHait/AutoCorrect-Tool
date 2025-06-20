@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Autocorrect Tool</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f8fb; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #ccc; padding: 30px; }
+        h2 { color: #2e7d32; }
+        textarea { width: 100%; height: 100px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; }
+        button { background: #2e7d32; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #388e3c; }
+        .result { margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 5px; }
+        label { font-weight: bold; }
+    </style>
+    
+<style>
+.back-menu-container {
+    position: fixed;
+      left: 50%;
+    bottom: 40px;
+      transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+     flex-direction: column;
+    align-items: center;
+}
+.back-btn {
+     background-color: #0077b5;
+    color: #fff;
+       border: none;
+    border-radius: 25px;
+     padding: 12px 28px;
+       font-size: 18px;
+    cursor: pointer;
+       position: relative;
+    transition: background 0.3s;
+        outline: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.back-btn:hover {
+    background-color: #005983;
+}
+.social-links {
+    display: flex;
+        flex-direction: column;
+      align-items: center;
+       position: absolute;
+     bottom: 60px;
+      left: 50%;
+       transform: translateX(-50%) scaleY(0);
+      opacity: 0;
+     pointer-events: none;
+       transition: opacity 0.4s, transform 0.4s;
+    gap: 10px;
+}
+.back-menu-container:hover .social-links {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) scaleY(1);
+}
+.social-link {
+    background: #4CAF50;
+      color: #fff;
+      text-decoration: none;
+    padding: 12px 32px;
+      border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        font-weight: bold;
+    font-size: 16px;
+     transition: background 0.2s, color 0.2s, transform 0.2s;
+    display: block;
+      text-align: center;
+}
+.social-link:hover {
+    background: #388e3c;
+    color: #fff;
+    transform: scale(1.05);
+}
+</style>
+
+
+<div class="back-menu-container">
+    <button class="back-btn" onclick="window.location.href='https://www.google.com'">Back</button>
+    <div class="social-links">
+        <a href="https://www.linkedin.com/in/arpan-hait" target="_blank" class="social-link">LinkedIn</a>
+        <a href="https://github.com/ArpanHait" target="_blank" class="social-link">GitHub</a>
+    </div>
+</div>
+</head>
+
+ <style>
+.processing-message {
+      display: none;
+    font-size: 1.2em;
+      color: #00b59a;
+       margin-top: 16px;
+    text-align: center;
+    font-weight: bold;
+       letter-spacing: 2px;
+}
+.dots span {
+    display: inline-block;
+    animation: wave 1s infinite;
+}
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+.dots span:nth-child(4) { animation-delay: 0.6s; }
+@keyframes wave {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-8px); }
+}
+</style>
+<body>
+    <div class="container">
+        <h2>AI-Driven Autocorrect Tool</h2>
+        <form method="post">
+            <label for="text">Enter your text:</label><br>
+            <textarea name="text" id="text" required>{{ user_input }}</textarea><br><br>
+            <button type="submit">Autocorrect</button>
+        </form>
+        
+        <div id="processing" class="processing-message">
+    Correcting<span class="dots"><span>.</span><span>.</span><span>.</span></span>
+</div>
+
+        {% if corrected %}
+        <div class="result">
+            <strong>Corrected Text:</strong><br>
+            {{ corrected }}
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+const backMenu = document.querySelector('.back-menu-container');
+const socialLinks = document.querySelector('.social-links');
+let hideTimeout;
+
+backMenu.addEventListener('mouseenter', () => {
+    socialLinks.style.opacity = '1';
+        socialLinks.style.pointerEvents = 'auto';
+      socialLinks.style.transform = 'translateX(-50%) scaleY(1)';
+    if (hideTimeout) clearTimeout(hideTimeout);
+});
+
+backMenu.addEventListener('mouseleave', () => {
+    hideTimeout = setTimeout(() => {
+            socialLinks.style.opacity = '0';
+        socialLinks.style.pointerEvents = 'none';
+          socialLinks.style.transform = 'translateX(-50%) scaleY(0)';
+    }, 3000); 
+});
+</script>
+
+ <script>
+document.querySelector('form').addEventListener('submit', function() {
+    document.getElementById('processing').style.display = 'block';
+});
+window.onload = function() {
+    document.getElementById('processing').style.display = 'none';
+};
+</script>
+
+</body>
+</html>
